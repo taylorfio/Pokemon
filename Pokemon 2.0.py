@@ -129,7 +129,7 @@ def action(attacker_type, health):
 restart = True
 while restart:  # variable for restarting code
     health = 30  # stating variables so it gets reset when the games starts over
-    pokemon_name = ""  # stating the variable so the code doesn't freak out when I start
+    pokemon_name = ""  # stating the variable so the code doesn't freak out when I start 
 
     PrintText(0, 12)  # prints intro image
     print("Welcome to the Kanto region")  # intro
