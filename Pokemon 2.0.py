@@ -2,6 +2,13 @@ import random
 import time
 
 
+def PrintText(first, last):  # prints ascii from text file
+    printfile = open('acsii_art.txt').readlines()
+    for line in range(first, last):
+        time.sleep(0.3)  # the print slowed down to give it a retro look
+        print(printfile[line], end="")
+
+
 def action(attacker_type, health):
     global attacker_name
     if attacker_type == "trainer":
@@ -31,8 +38,11 @@ def action(attacker_type, health):
                 print("error")
                 run_choice = input("would you like to 1_run or 2_fight?")
     if run_choice == "1" and attacker_type == "pokemon":  # one of the input options
+        print("")
         print("you ran away")
+        print("")
         time.sleep(0.5)
+        return health
 
     if run_choice == "2":
         global attacker_damage, attacker_health
@@ -78,7 +88,7 @@ def action(attacker_type, health):
                 print(str(pokemon_name) + " used Drain")  # this option lowers the opponents health
                 attacker_damage = attacker_damage * 0.8
                 print(str(attacker_name) + "'s attack has weakened")
-                print(str(attacker_name) + "'s attack is " + str(round(attacker_damage, 1)))  # I used the round function for when I display the reduced damage of the opponet
+                print(str(attacker_name) + "'s attack is " + str(round(attacker_damage, 1)))  # round function for displaying the reduced damage of the opponet
                 print("")
             elif attack_choice == 3:
                 print(str(pokemon_name) + " used Rage")  # this option raises your damage and health by 3
@@ -121,34 +131,7 @@ while restart:  # variable for restarting code
     health = 30  # stating variables so it gets reset when the games starts over
     pokemon_name = ""  # stating the variable so the code doesn't freak out when I start
 
-    time.sleep(0.3)  # the intro picture slowed down to give it a retro look
-    print("                                  ,'\ ")
-    time.sleep(0.3)
-    print("    _.----.        ____         ,'  _\   ___    ___     ____")
-    time.sleep(0.3)
-    print("_,-'       `.     |    |  /`.   \,-'    |   \  /   |   |    \  |`. ")
-    time.sleep(0.3)
-    print("\      __    \    '-.  | /   `.  ___    |    \/    |   '-.   \ |  | ")
-    time.sleep(0.3)
-    print(" \.    \ \   |  __  |  |/    ,','_  `.  |          | __  |    \|  | ")
-    time.sleep(0.3)
-    print("   \    \/   /,' _`.|      ,' / / / /   |          ,' _`.|     |  | ")
-    time.sleep(0.3)
-    print("    \     ,-'/  /   \    ,'   | \/ / ,`.|         /  /   \  |     | ")
-    time.sleep(0.3)
-    print("     \    \ |   \_/  |   `-.  \    `'  /|  |    ||   \_/  | |\    | ")
-    time.sleep(0.3)
-    print("      \    \ \      /       `-.`.___,-' |  |\  /| \      /  | |   | ")
-    time.sleep(0.3)
-    print("       \    \ `.__,'|  |`-._    `|      |__| \/ |  `.__,'|  | |   | ")
-    time.sleep(0.3)
-    print("        \_.-'       |__|    `-._ |              '-.|     '-.| |   | ")
-    time.sleep(0.3)
-    print("                                `'                            '-._| ")
-    time.sleep(0.3)
-    print("     ")
-    time.sleep(0)
-
+    PrintText(0, 12)  # prints intro image
     print("Welcome to the Kanto region")  # intro
     name = input("what is your name? ")  # input asking your name
     if len(name) >= 12:  # defencive coding for the length of the name
@@ -184,41 +167,24 @@ while restart:  # variable for restarting code
 
     for x in range(0, 60):  # creates 60 moves by repeating the move code under it 60 times
         time.sleep(0.5)  # gives the code a delay for retro effect
-        num_holder = random.randint(1, 16)  # this chooses the random moves options out of 15 so your odds of getting everything is tripled
-
+        num_holder = random.randint(1, 20)  # this chooses the random moves options out of 15 so your odds of getting everything is tripled
+        if health <= 0:  # this is here to break the loop if your health is zero or under
+            break
         if num_holder == 1:  # random option for trainer
             health = action("trainer", health)
-        if num_holder == 2:  # random options for pokemon
+        elif num_holder == 2:  # random options for pokemon
             health = action("pokemon", health)
-        if num_holder == 3:  # one of the random options
+        elif num_holder == 3:  # one of the random options
             health = 30
             print("you come across a town and heal " + str(pokemon_name))
             print(str(pokemon_name) + "'s health is at " + str(health))
-
-        elif num_holder in range(4, 16):  # the rest of the random options are displayed as move as a filler
+        else:
             print("move")
 
-        elif health <= 0:  # this is here to break the loop if your health is zero or under
-            break
-
     if health >= 0:  # the ending if you wim and your health is above zero
-        print("  ")
-        print("you made it to the master gym!")
-        print("you get a badge!")
-        print("  ")
-        print("   ,   /\   , ")
-        print("  / '-'  '-' \ ")
-        print("  |  Pokemon | ")
-        print("  |   .--.   | ")
-        print("  |  (    )  | ")
-        print("  \   '--'   / ")
-        print("   '--.  .--' ")
-        print("       \/ ")
-        print("  ")
+        PrintText(12, 23)
     elif health <= 0:  # the ending if you loss and your health is zero or under
-        print(" ")
-        print("you lose")
-        print(" ")
+        PrintText(23, 38)
     ending = input("do you want to restart: yes or no  ")  # code to restart the entire game
     while ending != "no" and ending != "yes":  # defencive coding
         print("error")
